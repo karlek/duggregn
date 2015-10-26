@@ -3,9 +3,9 @@
 module Torrent where
 
 import qualified Data.ByteString.Char8 as B
+import           Data.Maybe
 import           Lens.Family2
 import           Network.URL
-import           Data.Maybe
 
 import           Bencode
 

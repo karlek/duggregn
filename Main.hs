@@ -4,12 +4,12 @@ module Main where
 
 -- http://jonas.nitro.dk/bittorrent/bittorrent-rfc.html
 
-import           IPPrint.Colored (cpprint)
-import           Control.Monad (when,void)
+import           Control.Monad         (void, when)
 import qualified Data.ByteString.Char8 as B
+import           IPPrint.Colored       (cpprint)
 import           System.Environment    (getArgs)
 
-import Torrent (readTorrent)
+import           Torrent               (readTorrent)
 
 main :: IO ()
 main = do
