@@ -19,6 +19,7 @@ import           Lens.Family2
 
 import           Bencode
 import           Torrent
+import           Tracker
 
 main :: IO ()
 main = do
