@@ -1,18 +1,25 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes        #-}
+-- Used by bkey. Don't know what this does yet.
+{-# LANGUAGE RankNTypes #-}
 
 module Bencode where
+-- module Bencode (BValue, bstring, bnumber, blist, bkey, decode) where
 
 import           Control.Applicative
 import           Control.Monad
 import qualified Data.Attoparsec.ByteString.Char8 as P
-import           Data.ByteString.Char8
+import           Data.ByteString                  (ByteString)
+import qualified Data.ByteString.Char8            as B
 import           Lens.Family2
+import Text.Printf
 
+-- BValue is all possible values a bencoded string can represent.
 data BValue = String ByteString
             | Number Integer
             | List [BValue]
             | Dictionary [(ByteString, BValue)] deriving (Show)
+
+decode :: ByteString -> Either String BValue
+decode = P.parseOnly value
 
 string' :: P.Parser BValue
 string' = do
@@ -64,5 +71,18 @@ bkey k f bv@(Dictionary m) = case lookup k m of
                                Nothing -> pure bv
 bkey _ _ bv = pure bv
 
-decode :: ByteString -> Either String BValue
-decode = P.parseOnly value
+render :: BValue -> ByteString
+-- renderString
+render (String s)     = B.pack $ printf "%d:%s" (B.length s) (B.unpack s)
+-- renderNumber
+render (Number n)     = B.pack $ printf "i%de" n
+-- renderList
+render (List l)       = B.pack $ printf "l%se" $ B.unpack $ B.concat test
+  where
+    test :: [ByteString]
+    test = map render l
+-- renderDict
+render (Dictionary d) = B.pack $ printf "d%se" $ B.unpack $ B.concat $ test
+  where
+    test :: [ByteString]
+    test = map (\(x,y) -> B.concat [render (String x), render y]) d
