@@ -1,4 +1,4 @@
-module PWP where
+module Network.BitTorrent.PWP where
 
 import           Data.Binary
 import           Data.Binary.Get
