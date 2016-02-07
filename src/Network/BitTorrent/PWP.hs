@@ -15,6 +15,7 @@ data PWP = KeepAlive
          | Request Word32 Word32 Word32
          | Piece Word32 Word32 B.ByteString
          | Cancel Word32 Word32 Word32
+         deriving (Show)
 
 instance Binary PWP where
   put KeepAlive =

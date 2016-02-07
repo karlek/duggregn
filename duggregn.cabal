@@ -42,6 +42,7 @@ library
   default-extensions:  OverloadedStrings, RankNTypes
   exposed-modules:     Data.Torrent
                     ,  Data.Bencode
+                    ,  Network.IP
                     ,  Network.BitTorrent.Tracker
                     ,  Network.BitTorrent.PWP
                     ,  Network.BitTorrent.Handshake
@@ -86,6 +87,7 @@ executable duggregn
                      , network-socket-options
                      , either-unwrap
                      , cmdargs
+                     , hex
                      , async
 
   -- Directories containing source files.
